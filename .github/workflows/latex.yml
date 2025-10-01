@@ -23,10 +23,13 @@ jobs:
           cd /usr/local/texlive/2*
           cd bin/*
           pwd >> "$GITHUB_PATH"
-      - name: Test LaTeX Installation
-        run: latex small2e
+      - name: Build the TeX files
+        run: |
+          mkdir build
+          latex -output-directory=build src/*.tex
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          path: ./*
+          name: result
+          path: build
           if-no-files-found: error
