@@ -23,14 +23,6 @@ jobs:
           cd /usr/local/texlive/2*
           cd bin/*
           pwd >> "$GITHUB_PATH"
-      - name: Tree /tmp
-        run: |
-          cd /tmp/install-tl-2*
-          tree
-      - name: Tree TeX Live install folder(?)
-        run: |
-          cd /usr/local/texlive/
-          tree
       - name: Test LaTeX Installation
         run: latex small2e
       - name: Upload a Build Artifact
