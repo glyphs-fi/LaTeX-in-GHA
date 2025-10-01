@@ -1,0 +1,21 @@
+name: LaTeX
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Install TeX Live
+        # Instructions from https://tug.org/texlive/quickinstall.html
+        run: |
+          cd /tmp
+          wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+          zcat < install-tl-unx.tar.gz | tar xf -
+          cd install-tl-2*
+          sudo perl ./install-tl --no-interaction
+          tree
