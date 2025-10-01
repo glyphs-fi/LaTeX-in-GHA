@@ -20,7 +20,7 @@ jobs:
           sudo perl ./install-tl --no-interaction --scheme=small
       - name: Tree /tmp
         run: |
-          cd /tmp/
+          cd /tmp/install-tl-2*
           tree
       - name: Tree TeX Live install folder(?)
         run: |
