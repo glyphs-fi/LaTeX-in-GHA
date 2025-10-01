@@ -18,6 +18,9 @@ jobs:
           zcat < install-tl-unx.tar.gz | tar xf -
           cd install-tl-2*
           sudo perl ./install-tl --no-doc-install --no-src-install --no-interaction --scheme=scheme-basic
+          cd /usr/local/texlive/2*
+          cd bin/*
+          pwd >> "$GITHUB_PATH"
       - name: Tree /tmp
         run: |
           cd /tmp/install-tl-2*
