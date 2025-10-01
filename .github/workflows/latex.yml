@@ -18,12 +18,8 @@ jobs:
           path: ~/.texlive
           key: texlive
 
-      - name: List the state of node modules
-        if: ${{ steps.cache-texlive.outputs.cache-hit != 'true' }}
-        continue-on-error: true
-        run: latex --help
-
       - name: Install TeX Live
+        if: ${{ steps.cache-texlive.outputs.cache-hit != 'true' }}
         # Instructions from https://tug.org/texlive/quickinstall.html
         run: |
           cd /tmp/
@@ -31,8 +27,11 @@ jobs:
           zcat < install-tl-unx.tar.gz | tar xf -
           cd install-tl-2*
           perl ./install-tl --no-doc-install --no-src-install --no-interaction --texdir=~/.texlive --scheme=scheme-basic
-          tree ~/.texlive
-          ~/.texlive/bin/ >> "$GITHUB_PATH"
+
+      - name: Add TeX Live Installation to the PATH
+        run: |
+          cd ~/.texlive/bin/*
+          pwd >> "$GITHUB_PATH"
 
       - name: Build the TeX files
         run: |
