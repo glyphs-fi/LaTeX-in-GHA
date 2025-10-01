@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+
+      - name: Cache TeX Live Installation
+        id: cache-texlive
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/texlive/
+          key: texlive
+
+      - if: ${{ steps.cache-texlive.outputs.cache-hit != 'true' }}
+        name: List the state of node modules
+        continue-on-error: true
+        run: latex --help
+
       - name: Install TeX Live
         # Instructions from https://tug.org/texlive/quickinstall.html
         run: |
@@ -18,15 +31,18 @@ jobs:
           zcat < install-tl-unx.tar.gz | tar xf -
           cd install-tl-2*
           sudo perl ./install-tl --no-doc-install --no-src-install --no-interaction --scheme=scheme-basic
-      - name: Add Tex Live installation to PATH
+
+      - name: Add Tex Live Installation to PATH
         run: |
           cd /usr/local/texlive/2*
           cd bin/*
           pwd >> "$GITHUB_PATH"
+
       - name: Build the TeX files
         run: |
           mkdir build
           latex -output-directory=build src/*.tex
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
