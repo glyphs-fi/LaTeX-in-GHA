@@ -18,6 +18,8 @@ jobs:
           zcat < install-tl-unx.tar.gz | tar xf -
           cd install-tl-2*
           sudo perl ./install-tl --no-doc-install --no-src-install --no-interaction --scheme=scheme-basic
+      - name: Add Tex Live installation to PATH
+        run: |
           cd /usr/local/texlive/2*
           cd bin/*
           pwd >> "$GITHUB_PATH"
@@ -32,6 +34,7 @@ jobs:
       - name: Test LaTeX Installation
         run: latex small2e
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v4
         with:
-          path: .*
+          path: ./*
+          if-no-files-found: error
