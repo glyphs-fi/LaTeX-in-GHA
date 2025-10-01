@@ -31,12 +31,8 @@ jobs:
           zcat < install-tl-unx.tar.gz | tar xf -
           cd install-tl-2*
           perl ./install-tl --no-doc-install --no-src-install --no-interaction --texdir=~/.texlive --scheme=scheme-basic
-
-      - name: Add Tex Live Installation to PATH
-        run: |
-          cd ~/.texlive
-          cd bin/*
-          pwd >> "$GITHUB_PATH"
+          tree ~/.texlive
+          ~/.texlive/bin/ >> "$GITHUB_PATH"
 
       - name: Build the TeX files
         run: |
