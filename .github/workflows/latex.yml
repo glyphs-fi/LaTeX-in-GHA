@@ -11,14 +11,14 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Cache TeX Live Installation
+      - name: Attempt to retrieve TeX Live Installation from Cache
         uses: actions/cache@v4
         id: cache-texlive
         with:
           path: ~/.texlive
           key: texlive
 
-      - name: Install TeX Live
+      - name: Install TeX Live if not in Cache
         if: ${{ steps.cache-texlive.outputs.cache-hit != 'true' }}
         # Instructions from https://tug.org/texlive/quickinstall.html
         run: |
